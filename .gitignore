@@ -1,0 +1,11 @@
+# editor
+.idea
+
+# build cache
+__pycache__/
+
+# tests
+.cache
+
+# local
+.local_env

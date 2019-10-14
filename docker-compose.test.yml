@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    volumes:
+      - "./app:/code"
+    command: "python -m pytest -p no:cacheprovider --create-db"
+    depends_on:
+      - test_db
+    environment:
+      - APPLICATION_ENVIRONMENT=test
+  test_db:
+    image: postgres:12.0-alpine

@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: default
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./app:/code"
+    command: "gunicorn movies.wsgi:application --bind 0.0.0.0:8000 --reload"
+    depends_on:
+      - db
+    networks:
+      - default
+    environment:
+      - APPLICATION_ENVIRONMENT=dev
+    env_file:
+      - .local_env
+  db:
+    image: postgres:12.0-alpine
+    expose:
+      - "5432"
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
